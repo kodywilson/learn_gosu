@@ -26,8 +26,8 @@ class Player
   def move
     @x += @vel_x
     @y += @vel_y
-    @x %= 640
-    @y %= 480
+    @x %= 1024
+    @y %= 768
     
     @vel_x *= 0.95
     @vel_y *= 0.95

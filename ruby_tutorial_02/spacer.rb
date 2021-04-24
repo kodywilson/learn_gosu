@@ -8,7 +8,7 @@ end
 
 class Tutorial < Gosu::Window
   def initialize
-    super 640, 480
+    super 1024, 768
     self.caption = "Tutorial Game"
 
     @background_image = Gosu::Image.new("media/space.png", :tileable => true)
@@ -41,7 +41,7 @@ class Tutorial < Gosu::Window
   end
 
   def draw
-    @background_image.draw(0, 0, ZOrder::BACKGROUND)
+    @background_image.draw(0, 0, ZOrder::BACKGROUND, 1024, 768)
     @player.draw
     @stars.each { |star| star.draw }
     @font.draw_text("Score: #{@player.score}", 10, 10, ZOrder::UI, 1.0, 1.0, Gosu::Color::YELLOW)
