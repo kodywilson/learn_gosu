@@ -35,5 +35,13 @@ class Player
   def draw
     @image.draw_rot(@x, @y, 1, @angle)
   end
+
+  def score
+    @score
+  end
+
+  def collect_stars(stars)
+    stars.reject! { |star| Gosu.distance(@x, @y, star.x, star.y) < 35 }
+  end
 end
 
