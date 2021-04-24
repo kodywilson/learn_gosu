@@ -18,6 +18,8 @@ class Tutorial < Gosu::Window
 
     @star_anim = Gosu::Image.load_tiles("media/star.png", 25, 25)
     @stars = Array.new
+
+    @font = Gosu::Font.new(20)
   end
 
   def update
@@ -42,6 +44,7 @@ class Tutorial < Gosu::Window
     @background_image.draw(0, 0, ZOrder::BACKGROUND)
     @player.draw
     @stars.each { |star| star.draw }
+    @font.draw_text("Score: #{@player.score}", 10, 10, ZOrder::UI, 1.0, 1.0, Gosu::Color::YELLOW)
   end
 
   def button_down(id)
