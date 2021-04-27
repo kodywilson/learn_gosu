@@ -17,6 +17,7 @@ class WhackARuby < Gosu::Window
     @font = Gosu::Font.new(30)
     @score = 0
     @playing = true
+    @start_time = 0
   end
 
   def button_down(id)
@@ -30,6 +31,13 @@ class WhackARuby < Gosu::Window
           @score -= 1
         end
       end
+    else
+      if (id == Gosu::KbSpace)
+        @playing = true
+        @visible = -10
+        @start_time = Gosu.milliseconds
+        @score = 0
+      end
     end
   end
 
@@ -40,9 +48,9 @@ class WhackARuby < Gosu::Window
       @velocity_x *= -1 if @x + @width/2 > 800 || @x - @width/2 < 0
       @velocity_y *= -1 if @y +@height/2 > 600 || @y - @height/2 < 0
       @visible -= 1
-      @visible = 60 if @visible < -10 && rand < 0.01
-      @time_left = (60 - (Gosu.milliseconds / 1000))
+      @time_left = (60 - ((Gosu.milliseconds - @start_time) / 1000))
       @playing = false if @time_left <= 0
+      @visible = 60 if @visible < -10 && rand < 0.01
     end
   end
 
@@ -64,6 +72,7 @@ class WhackARuby < Gosu::Window
     @font.draw_text(@time_left.to_s, 20, 20, 20)
     unless @playing
       @font.draw_text('Game Over', 300, 300, 3)
+      @font.draw_text('Press the Space Bar to Play Again', 175, 350, 3)
       @visible = 20
     end
   end
