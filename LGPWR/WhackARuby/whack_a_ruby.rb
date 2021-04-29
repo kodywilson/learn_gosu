@@ -18,11 +18,15 @@ class WhackARuby < Gosu::Window
     @score = 0
     @playing = true
     @start_time = 0
+    @hammer_time = 0
+    @angle = 0.0
   end
 
   def button_down(id)
     if @playing
       if (id == Gosu::MsLeft)
+        @angle = 60.0
+        @hammer_time = Gosu.milliseconds
         if Gosu.distance(mouse_x, mouse_y, @x, @y) < 50 && @visible >= 0
           @hit = 1
           @score += 5
@@ -51,6 +55,7 @@ class WhackARuby < Gosu::Window
       @time_left = (60 - ((Gosu.milliseconds - @start_time) / 1000))
       @playing = false if @time_left <= 0
       @visible = 60 if @visible < -10 && rand < 0.01
+      @angle = 0.0 if @hammer_time + 100 < Gosu.milliseconds
     end
   end
 
@@ -58,7 +63,7 @@ class WhackARuby < Gosu::Window
     if @visible > 0
       @image.draw(@x - @width/2, @y - @height/2, 1)
     end
-    @hammer_image.draw(mouse_x - 40, mouse_y - 10, 1)
+    @hammer_image.draw_rot(mouse_x, mouse_y, 1, @angle)
     if @hit == 0
       c = Gosu::Color::NONE
     elsif @hit == 1
