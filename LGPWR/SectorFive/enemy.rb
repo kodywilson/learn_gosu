@@ -2,7 +2,7 @@
 
 class Enemy
 
-  SPEED = 3
+  MAX_SPEED = 3
 
   attr_reader :x, :y, :radius
 
@@ -14,10 +14,11 @@ class Enemy
     @wandering = false
     @wandirection = 'center'
     @timer = 0
+    @speed = rand(MAX_SPEED) + 1
   end
 
   def move
-    @y += SPEED
+    @y += @speed
     unless @wandering
       chance = rand(100)
       if chance < 80

@@ -19,6 +19,10 @@ class SectorFive < Gosu::Window
     @explosions = []
   end
 
+  def needs_cursor?
+    false
+  end
+
   def button_down(id)
     if id == Gosu::KbSpace
       @bullets.push(Bullet.new(self, @player.x, @player.y, @player.angle))
@@ -41,7 +45,9 @@ class SectorFive < Gosu::Window
           @bullets.delete bullet
           @explosions.push(Explosion.new(self, enemy.x, enemy.y))
         end
+        @bullets.delete bullet unless bullet.onscreen?
       end
+      @enemies.delete enemy if enemy.y > HEIGHT + enemy.radius
     end
     @explosions.dup.each do |explosion|
       @explosions.delete explosion if explosion.finished
@@ -53,9 +59,6 @@ class SectorFive < Gosu::Window
     @enemies.each { |enemy| enemy.draw }
     @bullets.each { |bullet| bullet.draw }
     @explosions.each { |explosion| explosion.draw }
-    #@explosions.each do |explosion|
-    #  explosion.draw
-    #end
   end
 end
 
