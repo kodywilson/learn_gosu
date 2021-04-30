@@ -22,6 +22,10 @@ class WhackARuby < Gosu::Window
     @angle = 0.0
   end
 
+  def needs_cursor?
+    false
+  end
+
   def button_down(id)
     if @playing
       if (id == Gosu::MsLeft)

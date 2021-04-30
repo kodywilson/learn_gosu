@@ -2,6 +2,7 @@ require 'gosu'
 require_relative 'player'
 require_relative 'enemy'
 require_relative 'bullet'
+require_relative 'explosion'
 
 class SectorFive < Gosu::Window
 
@@ -15,6 +16,7 @@ class SectorFive < Gosu::Window
     @player = Player.new(self)
     @enemies = []
     @bullets = []
+    @explosions = []
   end
 
   def button_down(id)
@@ -37,8 +39,12 @@ class SectorFive < Gosu::Window
         if distance < enemy.radius + bullet.radius
           @enemies.delete enemy
           @bullets.delete bullet
+          @explosions.push(Explosion.new(self, enemy.x, enemy.y))
         end
       end
+    end
+    @explosions.dup.each do |explosion|
+      @explosions.delete explosion if explosion.finished
     end
   end
 
@@ -46,6 +52,10 @@ class SectorFive < Gosu::Window
     @player.draw
     @enemies.each { |enemy| enemy.draw }
     @bullets.each { |bullet| bullet.draw }
+    @explosions.each { |explosion| explosion.draw }
+    #@explosions.each do |explosion|
+    #  explosion.draw
+    #end
   end
 end
 
