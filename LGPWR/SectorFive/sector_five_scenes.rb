@@ -15,19 +15,41 @@ class SectorFive < Gosu::Window
     self.caption = 'Sector Five'
     @background_image = Gosu::Image.new('images/start_screen.png')
     @scene = :start
+  end
+
+  def initialize_game
     @player = Player.new(self)
     @enemies = []
     @bullets = []
     @explosions = []
+    @scene = :game
   end
 
   def needs_cursor?
     false
   end
 
-  def button_down(id)
+  def button_down_game(id)
     if id == Gosu::KbSpace
       @bullets.push(Bullet.new(self, @player.x, @player.y, @player.angle))
+    end
+  end
+
+  def button_down_start(id)
+    initialize_game
+  end
+
+  def button_down_end(id)
+  end
+
+  def button_down(id)
+    case @scene
+    when :start
+      button_down_start(id)
+    when :game
+      button_down_game(id)
+    when :end
+      button_down_end(id)
     end
   end
 
