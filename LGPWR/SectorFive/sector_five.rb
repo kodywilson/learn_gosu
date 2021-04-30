@@ -47,10 +47,15 @@ class SectorFive < Gosu::Window
         end
         @bullets.delete bullet unless bullet.onscreen?
       end
+      @explosions.dup.each do |explosion|
+        @explosions.delete explosion if explosion.finished
+        boom_distance = Gosu.distance(enemy.x, enemy.y, explosion.x, explosion.y)
+        if boom_distance < enemy.radius + explosion.radius
+          @enemies.delete enemy
+          @explosions.push(Explosion.new(self, enemy.x, enemy.y))
+        end
+      end
       @enemies.delete enemy if enemy.y > HEIGHT + enemy.radius
-    end
-    @explosions.dup.each do |explosion|
-      @explosions.delete explosion if explosion.finished
     end
   end
 
