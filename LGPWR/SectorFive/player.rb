@@ -2,7 +2,7 @@
 class Player
 
   ROTATION_SPEED = 3 # These should be an instance variable based on chosen difficulty
-  ACCELERATION = 2
+  ACCELERATION = 1
   FRICTION = 0.9
 
   def initialize(window)
